@@ -6,4 +6,4 @@ A HIP-Based Error-Bounded Lossy Compressor for Scientific Data
 <a href="./LICENSE"><img src="https://img.shields.io/badge/License-BSD%203--Clause-blue.svg"></a>
 </p>
 
-hipSZ is a HIP implementation of the widely used [SZ lossy compressor](https://github.com/szcompressor/SZ) for scientific data. It is the *first* error-bounded lossy compressor that can run on both AMD GPUs and Sugon DCUs via ROCm platform. 
+hipSZ is a [HIP](https://github.com/ROCm/HIP) implementation of the widely used [SZ lossy compressor](https://github.com/szcompressor/SZ) for scientific data. It is the *first* error-bounded lossy compressor that can run on both AMD GPUs and Hygon DCUs via [ROCm](https://www.amd.com/en/products/software/rocm.html) platform. 
