@@ -17,10 +17,24 @@ set(CMAKE_HIP_STANDARD 17)
 set(CMAKE_HIP_STANDARD_REQUIRED ON)
 
 # Set HIP host compiler
-# set(CMAKE_HIP_HOST_COMPILER ${CMAKE_CXX_COMPILER})
+# message(WARNING "--------" ${CMAKE_CXX_COMPILER})
+find_program(CLANG_EXECUTABLE NAMES clang)
+if(CLANG_EXECUTABLE)
+    message(STATUS "Found clang: ${CLANG_EXECUTABLE}")
+else()
+    message(FATAL_ERROR "Could not find clang compiler")
+endif()
+set(CMAKE_HIP_HOST_COMPILER ${CLANG_EXECUTABLE})
+# message(WARNING "--------" ${CMAKE_HIP_HOST_COMPILER})
 # set(CMAKE_HIP_SEPARABLE_COMPILATION ON)
-set(CMAKE_HIP_ARCHITECTURES gfx926)
-# set(HIP_PROPAGATE_HOST_FLAGS ON)
+find_program(HIPCC_EXECUTABLE NAMES hipcc)
+if(HIPCC_EXECUTABLE)
+    message(STATUS "Found hipcc: ${HIPCC_EXECUTABLE}")
+else()
+    message(FATAL_ERROR "Could not find hipcc compiler")
+endif()
+set(CMAKE_HIP_COMPILER ${HIPCC_EXECUTABLE})
+set(CMAKE_HIP_ARCHITECTURES gfx926 gfx908 gfx900)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 # Set default build type to Release if not specified
@@ -31,7 +45,7 @@ endif()
 # Disable specific warnings (adjust as needed)
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wno-unused-result -Wno-unsequenced -D__HIP_PLATFORM_AMD__ -DHIP_ENABLE_WARP_SYNC_BUILTINS")
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-unused-result -Wno-unsequenced -D__HIP_PLATFORM_AMD__ -DHIP_ENABLE_WARP_SYNC_BUILTINS")
-set(CMAKE_HIP_FLAGS "${CMAKE_HIP_FLAGS} -Wno-unused-result -DHIP_ENABLE_WARP_SYNC_BUILTINS")
+set(CMAKE_HIP_FLAGS "${CMAKE_HIP_FLAGS} -Wno-unused-result -Wno-unsequenced -DHIP_ENABLE_WARP_SYNC_BUILTINS")
 
 # List of source files
 set(hipSZ_SOURCES
