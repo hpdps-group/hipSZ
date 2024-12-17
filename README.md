@@ -10,10 +10,10 @@ hipSZ is an ultra-fast and user-friendly GPU error-bounded lossy compressor for 
 
 
 ## Environment Requirements
-- Linux OS with Hygon DCU
+- Linux OS with AMD GPU or Hygon DCU
 - Git >= 2.15
 - CMake >= 3.21
-- DCU Toolkit >= 24.04.1
+- ROCm >= 6.2 or DCU Toolkit >= 24.04.1
 - clang >= 15.0.0
 
 ## Compile and Use hipSZ
