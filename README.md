@@ -1,12 +1,12 @@
-# hipSZ
-<a href="./LICENSE"><img src="https://img.shields.io/badge/License-BSD%203--Clause-blue.svg"></a> 
+<h1 align="center">
+A HIP-Based Error-Bounded Lossy Compressor for Scientific Data
+</h1>
 
-hipSZ is an ultra-fast and user-friendly GPU error-bounded lossy compressor for floating-point data array (both single- and double-precision). In short, hipSZ has several key features:
+<p align="center">
+<a href="./LICENSE"><img src="https://img.shields.io/badge/License-BSD%203--Clause-blue.svg"></a>
+</p>
 
-1. Fusing entire compression/decompression phase into **one HIP kernel function**.
-2. Efficient latency control and memory access -- targeting **ultra-fast end-to-end throughput**.
-3. Two encoding modes (plain or outlier modes) supported, **high compression ratio** for different data patterns. In general, if your dataset is sparse (consisting lots of 0s) -- plain mode will be a good choice; if your dataset exhibits non-sparse and high smoothness -- outlier mode will be a good choice.
-4. Executable binary, C/C++ API, Python API are provided.
+hipSZ is a [HIP](https://github.com/ROCm/HIP) implementation of the widely used [SZ lossy compressor](https://github.com/szcompressor/SZ) for scientific data. It is the *first* error-bounded lossy compressor that can run on mainstream HPC/AI accelerators including Nvidia GPUs, AMD GPUs, and Hygon DCUs via [ROCm](https://www.amd.com/en/products/software/rocm.html) platform. 
 
 
 ## Environment Requirements
@@ -15,6 +15,7 @@ hipSZ is an ultra-fast and user-friendly GPU error-bounded lossy compressor for 
 - CMake >= 3.21
 - ROCm >= 6.2 or DCU Toolkit >= 24.04.1
 - clang >= 15.0.0
+- CUDA Toolkit（TODO）
 
 ## Compile and Use hipSZ
 
@@ -64,7 +65,7 @@ Some example commands can be found here:
 ./hipSZ -i xx.f32 -m outlier -eb rel 1e-4 -t f32
 ```
 
-Some results measured on one NVIDIA A100 GPU can be shown as below:
+Some results measured on one Hygon K100 DCU can be shown as below:
 ```shell
 $ ./hipSZ -i pressure_2000 -t f32 -m plain -eb rel 1e-3
 hipSZ finished!
@@ -174,87 +175,11 @@ If you want to use hipSZ as a C/C++ interal API, there are two ways.
 
 
 ### Using hipSZ as Python API
-<!-- hipSZ also supports Python bindings for fast compression on GPU array.
-Examples can be found in ```hipSZ/python/```. 
-The required Python packages include ```ctypes, numpy, pycuda```. ```pytorch``` is optional unless you want to use hipSZ compress a ```torch``` tensor. -->
+
 TODO
-
-We provide two examples for showing how hipSZ can be used to compress/decompress a HPC field in numpy format (see ```python/example-hpc.py```) and a torch tensor (see ```python/example-torch.py```).
-To execute them:
-```shell
-# This shows hipSZ compresses a HPC field with f32 format.
-python example-hpc.py ./pressure_3000 f32
-
-# This shows hipSZ compresses a 4 GB f32 torch tensor.
-python example-torch.py
-```
-
-hipSZ Python API also preseves very high throughput. Taking compressing and decompressing 4 GB torch tensor on NVIDIA A100 GPU as an example.
-Similarly, we measure throughput in an end-to-end manner (e.g. following code block shows compression measurement).
-```python
-compressor = hipSZ()
-# hipSZ compression.
-start_time = time.time()                    # set hipSZ timer start
-compressed_size = compressor.compress(
-    ctypes.c_void_p(data.data_ptr()),       # Input data pointer on GPU
-    ctypes.c_void_p(int(d_cmpBytes)),       # Output buffer on GPU
-    data.numel(),                           # Number of elements
-    1E-2,                                   # Set 1E-2 as error bound.
-    data_type=0,                            # float 32, 1 for float64 (i.e. double)
-    mode=0                                  # Plain mode, 1 for outlier mode
-)
-compression_time = time.time() - start_time # set hipSZ timer end
-```
-
-This throughput measurement can be shown as below:
-```shell
-$ python example-torch.py 
-Original data size:   4294967296 bytes
-Compressed data size: 971519248 bytes
-Compression Ratio: 4.42
-Compression Throughput:   214.07 GB/s
-Decompression Throughput: 345.08 GB/s
-Decompressed data matches original within error bound: True
-```
-
 
 
 ## Documentation
-A more detailed documentation with some intrinsic usage descriptions will be updated soon.
+TODO
 
 ## Authors and Citation
-
-hipSZ was developed and contributed by following authors.
-
-- Developers: Yafan Huang (kernels, entries, and examples), Sheng Di (utility).
-- Contributors: Franck Cappello, Xiaodong Yu, Robert Underwood, Guanpeng Li.
-
-If you find hipSZ is useful, following two papers can be considered for citing.
-- **[SC'23]** hipSZ: An Ultra-fast GPU Error-bounded Lossy Compression Framework with Optimized End-to-End Performance
-    ```bibtex
-    @inproceedings{huang2023hipsz,
-        title={hipSZ: An Ultra-fast GPU Error-bounded Lossy Compression Framework with Optimized End-to-End Performance},
-        author={Huang, Yafan and Di, Sheng and Yu, Xiaodong and Li, Guanpeng and Cappello, Franck},
-        booktitle={Proceedings of the International Conference for High Performance Computing, Networking, Storage and Analysis},
-        pages={1--13},
-        year={2023}
-    }
-    ```
-- **[SC'24]** hipSZ2: A GPU Lossy Compressor with Extreme Throughput and Optimized Compression Ratio
-    ```bibtex
-    @inproceedings{huang2024hipsz2,
-        title={hipSZ2: A GPU Lossy Compressor with Extreme Throughput and Optimized Compression Ratio},
-        author={Huang, Yafan and Di, Sheng and Li, Guanpeng and Cappello, Franck},
-        booktitle={Proceedings of the International Conference for High Performance Computing, Networking, Storage and Analysis},
-        pages={1--18},
-        year={2024}
-    }
-    ```
-
-The **[SC'23]** paper proposes the hipSZ compression framework with kernel fusion, while the **[SC'24]** paper includes new lossless encoding modes and several performance optimization.
-
-## Copyright
-(C) 2023 by Argonne National Laboratory and University of Iowa. For more details see [COPYRIGHT](https://github.com/szcompressor/hipSZ/blob/master/LICENSE).
-
-## Acknowledgement
-This research was supported by the Exascale Computing Project (ECP), Project Number: 17-SC-20-SC, a collaborative effort of two DOE organizations – the Office of Science and the National Nuclear Security Administration, responsible for the planning and preparation of a capable exascale ecosystem, including software, applications, hardware, advanced system engineering, and early testbed platforms, to support the nation’s exascale computing imperative. The material was supported by the U.S. Department of Energy, Office of Science, Advanced Scientific Computing Research (ASCR), under contract DE-AC02-06CH11357, and supported by the National Science Foundation under Grant OAC-2003709, OAC-2104023, and OAC-2311875. We acknowledge the computing resources provided on Bebop (operated by Laboratory Computing Resource Center at Argonne) and on Theta and JLSE (operated by Argonne Leadership Computing Facility). We acknowledge the support of ARAMCO.
