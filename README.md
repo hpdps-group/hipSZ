@@ -59,35 +59,25 @@ Options:
 
 Some example commands can be found here:
 ```shell
-./hipSZ -i pressure_3000 -t f32 -m plain -eb abs 1E-4 -x pressure_3000.hipsz.cmp -o pressure_3000.hipsz.dec
-./hipSZ -i ccd-tst.bin.d64 -t f64 -m outlier -eb abs 0.01
-./hipSZ -i velocity_x.f32 -t f32 -m outlier -eb rel 0.01 -x velocity_x.f32.hipsz.cmp
-./hipSZ -i xx.f32 -m outlier -eb rel 1e-4 -t f32
+./hipSZ -i CLDLIQ_1_26_1800_3600.f32 -t f32 -m plain -eb rel 1e-4
+./hipSZ -i CLDLIQ_1_26_1800_3600.f32 -t f32 -m outlier -eb rel 1e-4
 ```
 
 Some results measured on one Hygon K100 DCU can be shown as below:
 ```shell
-$ ./hipSZ -i pressure_2000 -t f32 -m plain -eb rel 1e-3
+$ ./hipSZ -i CLDLIQ_1_26_1800_3600.f32 -t f32 -m plain -eb rel 1e-4
 hipSZ finished!
-hipSZ compression   end-to-end speed: 410.416846 GB/s
-hipSZ decompression end-to-end speed: 627.771706 GB/s
-hipSZ compression ratio: 22.328032
+hipSZ compression   end-to-end speed: 135.495201 GB/s
+hipSZ decompression end-to-end speed: 272.553248 GB/s
+hipSZ compression ratio: 9.897107
 
 Pass error check!
 
-$ ./hipSZ -i xx.f32 -t f32 -m outlier -eb rel 1e-4 
+$ ./hipSZ -i CLDLIQ_1_26_1800_3600.f32 -t f32 -m outlier -eb rel 1e-4 
 hipSZ finished!
-hipSZ compression   end-to-end speed: 341.494199 GB/s
-hipSZ decompression end-to-end speed: 412.994599 GB/s
-hipSZ compression ratio: 6.277573
-
-Pass error check!
-
-$ ./hipSZ -i acd-tst.bin.d64 -t f64 -m outlier -eb rel 0.0001 
-hipSZ finished!
-hipSZ compression   end-to-end speed: 552.982586 GB/s
-hipSZ decompression end-to-end speed: 550.156870 GB/s
-hipSZ compression ratio: 13.737053
+hipSZ compression   end-to-end speed: 65.323701 GB/s
+hipSZ decompression end-to-end speed: 182.146842 GB/s
+hipSZ compression ratio: 17.361573
 
 Pass error check!
 ```

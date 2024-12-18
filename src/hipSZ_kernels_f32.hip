@@ -47,7 +47,7 @@ __global__ void hipSZ_compress_kernel_outlier_f32(const float* const __restrict_
                                                   volatile unsigned int* const __restrict__ cmpOffset, 
                                                   volatile unsigned int* const __restrict__ locOffset, 
                                                   volatile int* const __restrict__ flag, 
-                                                  const float eb, const size_t nbEle)
+                                                  const float eb, const size_t nbEle) __attribute__((amdgpu_flat_work_group_size(32, 256)))
 {
     __shared__ unsigned int excl_sum;
     __shared__ unsigned int base_idx;
@@ -669,7 +669,7 @@ __global__ void hipSZ_decompress_kernel_outlier_f32(float* const __restrict__ de
                                                     volatile unsigned int* const __restrict__ cmpOffset, 
                                                     volatile unsigned int* const __restrict__ locOffset, 
                                                     volatile int* const __restrict__ flag, 
-                                                    const float eb, const size_t nbEle)
+                                                    const float eb, const size_t nbEle) __attribute__((amdgpu_flat_work_group_size(32, 256)))
 {
     __shared__ unsigned int excl_sum;
     __shared__ unsigned int base_idx;
@@ -1260,7 +1260,7 @@ __global__ void hipSZ_compress_kernel_plain_f32(const float* const __restrict__ 
                                                 volatile unsigned int* const __restrict__ cmpOffset, 
                                                 volatile unsigned int* const __restrict__ locOffset, 
                                                 volatile int* const __restrict__ flag, 
-                                                const float eb, const size_t nbEle)
+                                                const float eb, const size_t nbEle) __attribute__((amdgpu_flat_work_group_size(32, 256)))
 {
     __shared__ unsigned int excl_sum;
     __shared__ unsigned int base_idx;
@@ -1590,7 +1590,7 @@ __global__ void hipSZ_decompress_kernel_plain_f32(float* const __restrict__ decD
                                                   volatile unsigned int* const __restrict__ cmpOffset, 
                                                   volatile unsigned int* const __restrict__ locOffset, 
                                                   volatile int* const __restrict__ flag, 
-                                                  const float eb, const size_t nbEle)
+                                                  const float eb, const size_t nbEle) __attribute__((amdgpu_flat_work_group_size(32, 256)))
 {
     __shared__ unsigned int excl_sum;
     __shared__ unsigned int base_idx;
