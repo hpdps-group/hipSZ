@@ -1,10 +1,10 @@
-Copyright © 2024, UChicago Argonne and University of Iowa
+Copyright © 2024, Chinese Academy of Sciences (CAS) and University of Science and Technology of China (USTC)
 
 All Rights Reserved
 
-Software Name: cuSZp: A Fast and High-ratio GPU Error-bounded Lossy Compressor
+Software Name: hipSZ: A portable implementation of SZ lossy compression for Nvidia GPUs, AMD GPUs, and Hygon DCUs
 
-By: Argonne National Laboratory, University of Iowa
+By: Chinese Academy of Sciences and University of Science and Technology of China
 
 OPEN SOURCE LICENSE
 
