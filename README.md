@@ -176,5 +176,5 @@ TODO
 ## Citation
 TODO
 
-## Future Work
-- Optimizations for AMD GPU architectures with different warp sizes, number of registers, cache sizes, etc. 
+## Clarification
+Due to political reasons between China and the U.S., the development of hipSZ is independent of other software and repositories under github.com/szcompressor. There is no administrative, legal connection, or collaboration between the developers of hipSZ and the U.S. developers of szcompressor software.
