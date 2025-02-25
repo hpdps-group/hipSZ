@@ -52,6 +52,11 @@ __global__ void hipSZ_compress_kernel_outlier_f32(const float* const __restrict_
     __shared__ unsigned int excl_sum;
     __shared__ unsigned int base_idx;
 
+    if (threadIdx.x == 0) {
+        excl_sum = 0;
+        base_idx = 0;
+    }
+
     const int tid = threadIdx.x;
     const int bid = blockIdx.x;
     const int idx = bid * blockDim.x + tid;
@@ -674,6 +679,11 @@ __global__ void hipSZ_decompress_kernel_outlier_f32(float* const __restrict__ de
     __shared__ unsigned int excl_sum;
     __shared__ unsigned int base_idx;
 
+    if (threadIdx.x == 0) {
+        excl_sum = 0;
+        base_idx = 0;
+    }
+
     const int tid = threadIdx.x;
     const int bid = blockIdx.x;
     const int idx = bid * blockDim.x + tid;
@@ -1265,12 +1275,17 @@ __global__ void hipSZ_compress_kernel_plain_f32(const float* const __restrict__ 
     __shared__ unsigned int excl_sum;
     __shared__ unsigned int base_idx;
 
+    if (threadIdx.x == 0) {
+        excl_sum = 0;
+        base_idx = 0;
+    }
+
     const int tid = threadIdx.x;
     const int bid = blockIdx.x;
     const int idx = bid * blockDim.x + tid;
     const int lane = idx & 0x1f;
     const int warp = idx >> 5;
-    const int block_num = cmp_chunk >> 5;
+    const int block_num = cmp_chunk >> 5;  // a chunk: 32 block; a block: 32 element
     const int rate_ofs = (nbEle+cmp_tblock_size*cmp_chunk-1)/(cmp_tblock_size*cmp_chunk)*(cmp_tblock_size*cmp_chunk)/32;
     const float recipPrecision = 0.5f/eb;
 
@@ -1594,6 +1609,11 @@ __global__ void hipSZ_decompress_kernel_plain_f32(float* const __restrict__ decD
 {
     __shared__ unsigned int excl_sum;
     __shared__ unsigned int base_idx;
+
+    if (threadIdx.x == 0) {
+        excl_sum = 0;
+        base_idx = 0;
+    }
 
     const int tid = threadIdx.x;
     const int bid = blockIdx.x;

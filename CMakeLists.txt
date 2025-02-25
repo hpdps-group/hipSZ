@@ -34,7 +34,7 @@ else()
     message(FATAL_ERROR "Could not find hipcc compiler")
 endif()
 set(CMAKE_HIP_COMPILER ${HIPCC_EXECUTABLE})
-set(CMAKE_HIP_ARCHITECTURES gfx926 gfx908 gfx900)
+set(CMAKE_HIP_ARCHITECTURES gfx926)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 # Set default build type to Release if not specified

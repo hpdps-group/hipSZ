@@ -24,6 +24,11 @@ __global__ void hipSZ_compress_kernel_outlier_f64(const double* const __restrict
     __shared__ unsigned int excl_sum;
     __shared__ unsigned int base_idx;
 
+    if (threadIdx.x == 0) {
+        excl_sum = 0;
+        base_idx = 0;
+    }
+
     const int tid = threadIdx.x;
     const int bid = blockIdx.x;
     const int idx = bid * blockDim.x + tid;
@@ -646,6 +651,11 @@ __global__ void hipSZ_decompress_kernel_outlier_f64(double* const __restrict__ d
     __shared__ unsigned int excl_sum;
     __shared__ unsigned int base_idx;
 
+    if (threadIdx.x == 0) {
+        excl_sum = 0;
+        base_idx = 0;
+    }
+
     const int tid = threadIdx.x;
     const int bid = blockIdx.x;
     const int idx = bid * blockDim.x + tid;
@@ -1237,6 +1247,11 @@ __global__ void hipSZ_compress_kernel_plain_f64(const double* const __restrict__
     __shared__ unsigned int excl_sum;
     __shared__ unsigned int base_idx;
 
+    if (threadIdx.x == 0) {
+        excl_sum = 0;
+        base_idx = 0;
+    }
+
     const int tid = threadIdx.x;
     const int bid = blockIdx.x;
     const int idx = bid * blockDim.x + tid;
@@ -1509,6 +1524,11 @@ __global__ void hipSZ_decompress_kernel_plain_f64(double* const __restrict__ dec
 {
     __shared__ unsigned int excl_sum;
     __shared__ unsigned int base_idx;
+
+    if (threadIdx.x == 0) {
+        excl_sum = 0;
+        base_idx = 0;
+    }
 
     const int tid = threadIdx.x;
     const int bid = blockIdx.x;
